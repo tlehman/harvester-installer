@@ -14,8 +14,8 @@ source ${SCRIPTS_DIR}/version-rancher
 source ${SCRIPTS_DIR}/version-harvester ${TOP_DIR}/../harvester
 source ${SCRIPTS_DIR}/version-monitoring
 
-BASE_OS_IMAGE="rancher/harvester-os:20220721"
-HARVESTER_OS_IMAGE=localhost:5000/os2_libcap
+BASE_OS_IMAGE=localhost:5000/os2_libcap
+HARVESTER_OS_IMAGE=rancher/harvester-os:$VERSION
 
 cd ${PACKAGE_HARVESTER_OS_DIR}
 
@@ -34,7 +34,7 @@ EOF
 # Collect dependencies' versions
 ${SCRIPTS_DIR}/collect-deps.sh harvester-release.yaml
 
-docker build --pull \
+docker build \
 	--build-arg BASE_OS_IMAGE="${BASE_OS_IMAGE}" \
 	--build-arg HARVESTER_PRETTY_NAME="${PRETTY_NAME}" \
 	-t ${HARVESTER_OS_IMAGE} .
